@@ -1,0 +1,4 @@
+.env
+storage/logs.json
+poetry.lock
+__pycache__/

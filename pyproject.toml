@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mindmate-bot"
+version = "0.1.0"
+description = "Telegram bot for mental health check-ins"
+authors = ["Taj <tajulislamj200@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-telegram-bot = "^20.7"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.scripts]
+mindmate = "bot:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
