@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mindmate-bot"
-version = "0.1.0"
+version = "1.0.0"
 description = "Telegram bot for mental health check-ins"
 authors = ["Taj <tajulislamj200@gmail.com>"]
 license = "MIT"
