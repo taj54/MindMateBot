@@ -102,13 +102,6 @@ MindMateBot/
 
 ---
 
-## 🔐 Privacy & Logging
-
-- The bot **does not store any personal user data**.
-- All interactions are anonymized.
-- See `utils/logger.py` for logging implementation details.
-
----
 
 ## 🤝 Contributing
 

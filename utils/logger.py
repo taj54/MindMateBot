@@ -36,15 +36,26 @@ def save_logs(data):
         json.dump(data, f, indent=2)
 
 
-def log_interaction(user_id, step, message_text):
-    """Log a user interaction step with timestamp and message."""
+def log_interaction(user_id, step, message_text, log_type="interaction", username=None):
+    """
+    Log a user action with optional username and log_type.
+    
+    Parameters:
+        user_id (int): Telegram user ID
+        username (str): Telegram username or fallback
+        step (str): Step or context of the action
+        message_text (str): What the user sent
+        log_type (str): Type of log event ('login', 'checkin', etc.)
+    """
     ensure_log_file()
 
     log_entry = {
         "user_id": user_id,
+        "username": username or "Anonymous",
         "timestamp": datetime.now().isoformat(),
         "step": step,
-        "message": message_text
+        "message": message_text,
+        "type": log_type
     }
 
     logs = load_logs()
