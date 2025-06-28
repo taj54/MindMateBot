@@ -7,9 +7,12 @@ from utils.logger import log_interaction
 
 class MindMateBot:
     def __init__(self):
-        # 🔐 Load environment and get token
+        # 🔐 Load environment variables
         load_dotenv()
         self.token = os.getenv("TELEGRAM_TOKEN")
+        self.webhook_url = os.getenv("WEBHOOK_URL")  # Optional for webhook deployments
+        self.port = int(os.getenv("PORT", 8443))     # Default Render port
+
         if not self.token:
             raise RuntimeError("❌ TELEGRAM_TOKEN not found in .env file.")
 
@@ -37,24 +40,42 @@ class MindMateBot:
         error_msg = f"⚠️ Exception: {context.error}"
         print(error_msg)
 
-        if update and update.effective_user:
-            await context.bot.send_message(
-                chat_id=update.effective_user.id,
-                text="⚠️ Something went wrong. Please try again."
-            )
+        user = getattr(update, "effective_user", None)
+        username = getattr(user, "username", "unknown")
+        user_id = user.id if user else 0
+
+        # Notify user
+        if user_id:
+            try:
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text="⚠️ Something went wrong. Please try again."
+                )
+            except Exception:
+                pass  # Fail silently if unable to send message
 
         log_interaction(
-            user_id=update.effective_user.id if update and update.effective_user else 0,
-            username=getattr(update.effective_user, "username", "unknown"),
+            user_id=user_id,
+            username=username,
             step="error",
             message_text=str(context.error),
             log_type="error"
         )
 
     def run(self):
-        """Start polling for updates."""
+        """Start the bot using polling or webhook depending on environment."""
         print("🤖 MindMateBot is running...")
-        self.app.run_polling()
+
+        if self.webhook_url:
+            # Production mode: Use webhook (e.g. on Render)
+            self.app.run_webhook(
+                listen="0.0.0.0",
+                port=self.port,
+                webhook_url=self.webhook_url
+            )
+        else:
+            # Development mode: Use polling
+            self.app.run_polling()
 
 
 def run_main():
