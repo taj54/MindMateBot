@@ -57,6 +57,6 @@ class MindMateBot:
         self.app.run_polling()
 
 
-if __name__ == "__main__":
+def run_main():
     bot = MindMateBot()
     bot.run()

@@ -4,6 +4,9 @@ version = "1.0.0"
 description = "Telegram bot for mental health check-ins"
 authors = ["Taj <tajulislamj200@gmail.com>"]
 license = "MIT"
+packages = [
+    { include = "mindmate_bot" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -11,7 +14,7 @@ python-telegram-bot = "^20.7"
 python-dotenv = "^1.0.1"
 
 [tool.poetry.scripts]
-mindmate = "bot:main"
+mindmate = "mindmate_bot.bot:run_main"
 
 [build-system]
 requires = ["poetry-core"]

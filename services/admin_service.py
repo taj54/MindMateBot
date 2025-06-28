@@ -19,8 +19,6 @@ ADMIN_IDS = [
     for uid in os.getenv("ADMIN_IDS", "").split(",")
     if uid.strip().isdigit()
 ]
-print(f"🔐 Loaded admin IDs: {ADMIN_IDS}")  # Debugging line to check loaded IDs
-
 
 class AdminService:
     def __init__(self):
