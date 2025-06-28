@@ -11,7 +11,7 @@ class MindMateBot:
         load_dotenv()
         self.token = os.getenv("TELEGRAM_TOKEN")
         self.webhook_url = os.getenv("WEBHOOK_URL")  # Optional for webhook deployments
-        self.port = int(os.getenv("PORT", 8443))  # Default Render port
+        self.port = int(os.getenv("PORT", 8443))     # Default Render port
 
         if not self.token:
             raise RuntimeError("❌ TELEGRAM_TOKEN not found in .env file.")
@@ -48,7 +48,8 @@ class MindMateBot:
         if user_id:
             try:
                 await context.bot.send_message(
-                    chat_id=user_id, text="⚠️ Something went wrong. Please try again."
+                    chat_id=user_id,
+                    text="⚠️ Something went wrong. Please try again."
                 )
             except Exception:
                 pass  # Fail silently if unable to send message
@@ -58,7 +59,7 @@ class MindMateBot:
             username=username,
             step="error",
             message_text=str(context.error),
-            log_type="error",
+            log_type="error"
         )
 
     def run(self):
@@ -70,8 +71,7 @@ class MindMateBot:
             self.app.run_webhook(
                 listen="0.0.0.0",
                 port=self.port,
-                webhook_url=f"{self.webhook_url}/webhook", 
-                path="/webhook",
+                webhook_url=self.webhook_url
             )
         else:
             # Development mode: Use polling
